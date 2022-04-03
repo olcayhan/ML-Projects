@@ -10,10 +10,9 @@ all_id = test.iloc[:,0:1]
 x = train.iloc[:,1:12]
 y = train.iloc[:,-1]
 
-trans =pd.get_dummies(y,prefix='Transported')
-y = pd.concat([y,trans],axis=1)
-y = y.iloc[:,-1]
-Y = y.values
+
+
+
 
 homeplanet_dummies =pd.get_dummies(x[["HomePlanet"]],prefix='HomePlanet')
 x = pd.concat([x,homeplanet_dummies],axis=1)
@@ -68,14 +67,12 @@ X_test = x_test.values
 from sklearn.tree import DecisionTreeClassifier
 dtc = DecisionTreeClassifier(criterion = 'entropy')
 
-dtc.fit(X,Y)
+dtc.fit(X,y)
 y_pred = dtc.predict(X_test)
+print(y_pred)
 
-from sklearn.metrics import r2_score
-print('Decision Tree R2 degeri')
-print(r2_score(Y, dtc.predict(X)))
 
-y_pred = y_pred >= 0.5
+
 
 
 df = pd.DataFrame(y_pred)
